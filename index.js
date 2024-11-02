@@ -16,7 +16,18 @@ function init() {
   camera.position.z = 5;
 
   renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  let viewportWidth;
+  let viewportHeight;
+  if (window.innerWidth < window.innerHeight) {
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerWidth;
+  } else {
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerHeight;
+  }
+  renderer.setSize(viewportWidth, viewportHeight);
+
   document.body.appendChild(renderer.domElement);
 
   // Player
@@ -28,7 +39,7 @@ function init() {
 
   // Blocks
   for (let i = 0; i < 10; i++) {
-    let blockGeometry = new THREE.BoxGeometry(1, 1, 1);
+    let blockGeometry = new THREE.BoxGeometry(2, 1, 1);
     let blockMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     let block = new THREE.Mesh(blockGeometry, blockMaterial);
     block.position.x = Math.random() * 10 - 5;
@@ -39,6 +50,21 @@ function init() {
 
   document.addEventListener('keydown', onDocumentKeyDown, false);
   document.addEventListener('keyup', onDocumentKeyUp, false);
+  window.addEventListener('resize', onWindowResize, false);
+}
+
+function onWindowResize() {
+
+  let viewportWidth;
+  let viewportHeight;
+  if (window.innerWidth < window.innerHeight) {
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerWidth;
+  } else {
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerHeight;
+  }
+  renderer.setSize(viewportWidth, viewportHeight);
 }
 
 
